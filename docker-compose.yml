@@ -8,7 +8,8 @@ services:
       - "50000:50000"
     volumes:
       - jenkins_home:/var/jenkins_home
-      - ./:/workspace  # Mounts your project folder
+      - ./:/workspace
+      - /var/run/docker.sock:/var/run/docker.sock  # Mounts your project folder
     environment:
       - JENKINS_OPTS="--httpPort=8080"
 
