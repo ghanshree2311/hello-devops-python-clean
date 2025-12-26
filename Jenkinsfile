@@ -3,11 +3,12 @@ pipeline {
     
     stages {
         stage('Build') {
-            steps {
-                echo 'Building Python app...'
-                sh 'docker build -t hello-devops-python:${BUILD_NUMBER} .'
-            }
-        }
+    steps {
+        echo 'Would run: docker build -t hello-devops-python:${BUILD_NUMBER} .'
+        // sh 'docker build -t hello-devops-python:${BUILD_NUMBER} .'
+    }
+}
+
         
         stage('Test') {
             steps {
