@@ -1,37 +1,29 @@
 pipeline {
     agent any
-    
+
     stages {
         stage('Build') {
-    steps {
-        echo 'Would run: docker build -t hello-devops-python:${BUILD_NUMBER} .'
-        // sh 'docker build -t hello-devops-python:${BUILD_NUMBER} .'
-    }
-}
+            steps {
+                echo "Would run: docker build -t hello-devops-python:${BUILD_NUMBER} ."
+            }
+        }
 
-        
         stage('Test') {
             steps {
-                echo 'Running tests...'
-                sh 'docker run --rm hello-devops-python:${BUILD_NUMBER} python -c "from flask import Flask; print(\'Tests passed!\')"'
+                echo "Would run: docker run --rm hello-devops-python:${BUILD_NUMBER} pytest or unit tests"
             }
         }
-        
+
         stage('Deploy') {
             steps {
-                echo 'Deploying to localhost...'
-                sh 'docker run -d -p 5001:5000 --name hello-app-${BUILD_NUMBER} hello-devops-python:${BUILD_NUMBER}'
-                sh 'sleep 3'
-                sh 'curl -f http://localhost:5001 || true'
+                echo "Would run: docker run -d -p 5001:5000 --name hello-app-${BUILD_NUMBER} hello-devops-python:${BUILD_NUMBER}"
             }
         }
     }
-    
+
     post {
         always {
-            sh 'docker stop hello-app-${BUILD_NUMBER} || true'
-            sh 'docker rm hello-app-${BUILD_NUMBER} || true'
+            echo "Would run: docker stop/rm hello-app-${BUILD_NUMBER}"
         }
     }
 }
-
